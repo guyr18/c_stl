@@ -68,7 +68,7 @@ struct lnode* pop(struct stack_container* cnt)
     {
 
         printf("pop(): stack_container must be non-null and have size > 1 to pop.\n");   
-        return; 
+        return NULL;
 
     }
 
@@ -79,7 +79,7 @@ struct lnode* pop(struct stack_container* cnt)
     {
 
         printf("pop(): no data to pop.\n");
-        return; 
+        return NULL;
 
     }
 
