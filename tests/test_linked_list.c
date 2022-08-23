@@ -63,6 +63,17 @@ int main(void)
     // returns 1 if a value exists and 0 if it does not.
     contains_value(1, my_linked_list);
     contains_value(50, my_linked_list);
+
+    // Free memory.
+    while(my_linked_list != NULL)
+    {
+
+        struct lnode* next = my_linked_list->next;
+        free(my_linked_list);
+        my_linked_list = next;
+
+    }
+
     return 0;
 
 }
