@@ -12,13 +12,13 @@ int main(void)
     // Our stack consists of: 5.
     push(&sc, 5);
 
-    // Our stack consists of: 5, 1.
+    // Our stack consists of: 1, 5.
     push(&sc, 1);
 
-    // Our stack consists of 5, 1, 52.
+    // Our stack consists of 52, 1, 5.
     push(&sc, 52);
 
-    // Pop. Our new stack is 1, 52.
+    // Pop. Our new stack is 1, 5.
     pop(&sc);
 
     // Peek to verify this.
