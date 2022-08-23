@@ -42,6 +42,28 @@ int main(void)
 
     }
 
+    struct bucket_node** cache = settings.cache;
+    int index2 = 0;
+
+    // Free memory.
+    while(index2 < settings.capacity)
+    {
+
+        struct bucket_node* temp_bucket = cache[index2];
+
+        while(temp_bucket != NULL)
+        {
+
+            struct bucket_node* next = temp_bucket->next;
+            free(temp_bucket);
+            temp_bucket = next;
+
+        }
+
+        index2++;
+
+    }
+
     return 0;
 
 }
