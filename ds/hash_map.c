@@ -58,6 +58,7 @@ struct bucket_node* get(const char* key, const struct hash_map_settings* setting
     if(settings == NULL || settings->capacity == 0 || settings->cur_buckets_filled == 0 || settings->total_nodes == 0)
     {
 
+        printf("get(): settings must be non-null and configured to use get(). Please put keys into hash map first.\n");
         return NULL;
 
     }
@@ -66,13 +67,19 @@ struct bucket_node* get(const char* key, const struct hash_map_settings* setting
     struct bucket_node* bucket_head = settings->cache[bucket_index];
     
     // Key does not exist.
-    if(bucket_head == NULL) { 
-        return NULL; }
+    if(bucket_head == NULL)
+    {
+
+        printf("get(): key [%s] does not exist.\n", key);
+        return NULL; 
+
+    }
 
     // Loop until the current item in our bucket (bucket_head) is null or we find the key that we are looking for.
     while(bucket_head != NULL && bucket_head->key != key) { bucket_head = bucket_head->next; }
 
     // Return the result; if it is null return a null pointer, otherwise return the bucket that we found.
+    printf("get(): key [%s] found.\n", key);
     return bucket_head == NULL ? NULL : bucket_head;
 
 }
@@ -86,6 +93,7 @@ struct bucket_node* put(const char* key, const int value, struct hash_map_settin
     if(settings == NULL)
     {
 
+        printf("put(): settings parameter must not be NULL.\n");
         return NULL;
 
     }
