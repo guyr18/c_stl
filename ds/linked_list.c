@@ -109,6 +109,7 @@ struct lnode* lead_insert(struct lnode* root, const int value)
     if(root == NULL) 
     {
 
+        printf("lead_insert(): list empty; insert linked list node with value [%i] at head of linked list.\n", value);
         root = (struct lnode*)malloc(sizeof(struct lnode));
         root->value = value;
         return root;
@@ -116,6 +117,7 @@ struct lnode* lead_insert(struct lnode* root, const int value)
     }
 
     // One or more nodes.
+    printf("lead_insert(): list non-empty; insert linked list node with value [%i] at head of linked list.\n", value);
     struct lnode* ptr = (struct lnode*)malloc(sizeof(struct lnode));
     struct lnode* old_head = root;
     ptr->value = value;
@@ -131,8 +133,10 @@ struct lnode* lead_insert(struct lnode* root, const int value)
 int get_integer_repr(struct lnode* root)
 {
 
+    // Linked list is empty. There is no integer representation. Return 0.
     if(root == NULL) { 
 
+        printf("get_integer_repr(): empty list supplied, root parameter is null.\n");
         return 0;
 
     }
@@ -146,6 +150,9 @@ int get_integer_repr(struct lnode* root)
 
         repr = (repr * 10) + root->value;
 
+        // If first value is negative, take note of this. We will compute the value
+        // as positive and check this flag before returning the value. If it equal to 1,
+        // we can negate the return value.
         if(is_first_node == 1 && root->value < 0)
         {
 
@@ -159,6 +166,7 @@ int get_integer_repr(struct lnode* root)
 
     }
 
+    printf("get_integer_repr(): returning integer representation [%i].\n", is_negative ? repr * -1 : repr);
     return is_negative ? repr * -1 : repr;
 
 }
@@ -183,6 +191,7 @@ struct lnode* trail_insert(struct lnode* root, struct lnode* end, const int valu
     if(root == NULL)
     {
 
+        printf("trail_insert(): list is empty. allocating for and assigning node with value [%i].\n", value);
         root = (struct lnode*)malloc(sizeof(struct lnode));
         root->value = value;
         return root;
@@ -202,6 +211,7 @@ struct lnode* trail_insert(struct lnode* root, struct lnode* end, const int valu
             if(root->next == NULL)
             {
 
+                printf("trail_insert(): list is non-empty, inserting value [%i] at end, given null end pointer.\n", value);
                 root->next = (struct lnode*)malloc(sizeof(struct lnode));
                 root->next->value = value;
                 break;
@@ -218,6 +228,7 @@ struct lnode* trail_insert(struct lnode* root, struct lnode* end, const int valu
 
     // Root and end are non-null we can just allocate in constant time to the heap by using end->next. We
     // assume that root and end are interconnected.
+    printf("trail_insert(): list is non-empty, inserting value [%i] at end, given two non-null pointers.\n", value);
     end->next = (struct lnode*)malloc(sizeof(struct lnode));
     end->next->value = value;
     return root;
@@ -231,6 +242,7 @@ struct lnode* reverse_list(struct lnode* root)
     struct lnode* prev = NULL;
     struct lnode* cur = root;
 
+    printf("reverse_list(): reversing linked list.\n");
     while(cur != NULL)
     {
 
@@ -250,12 +262,15 @@ struct lnode* reverse_list(struct lnode* root)
 struct lnode* find_node_with_value(const int value, struct lnode* root)
 {
 
+    printf("find_node_with_value(): searching for node with value [%i].\n", value);
+
     while(root != NULL)
     {
 
         if(root->value == value)
         {
 
+            printf("find_node_with_value(): value [%i] found.\n", value);
             return root;
 
         }
@@ -264,6 +279,7 @@ struct lnode* find_node_with_value(const int value, struct lnode* root)
 
     }
 
+    printf("find_node_with_value(): value [%i] does not exist.\n", value);
     return NULL;
 
 }
@@ -273,12 +289,15 @@ struct lnode* find_node_with_value(const int value, struct lnode* root)
 int contains_value(const int value, struct lnode* root)
 {
 
+    printf("contains_value(): searching for value [%i].\n", value);
+
     while(root != NULL)
     {
 
         if(root->value == value) 
         {
 
+            printf("contains_value(): value [%i] exists.\n", value);
             return 1;
 
         }
@@ -287,6 +306,7 @@ int contains_value(const int value, struct lnode* root)
 
     }
 
+    printf("contains_value(): value [%i] does not exist.\n", value);
     return 0;
 
 }

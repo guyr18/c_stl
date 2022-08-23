@@ -1,4 +1,4 @@
-#include "ds/linked_list.c"
+#include "../ds/linked_list.c"
 #include <stdio.h>
 
 int main(void)
