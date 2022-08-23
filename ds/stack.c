@@ -2,7 +2,6 @@
 #include "linked_list.c"
 #include <stdio.h>
 
-
 // Stack.c represents a LIFO stack data structure with three core functions:
 //
 //     push: Push item to the top of the stack
@@ -26,8 +25,15 @@ struct lnode* push(struct stack_container* cnt, const int value)
 {
 
     // We don't have enough capacity for this. So just return the function.
-    if(cnt == NULL || cnt->size + 1 == cnt->capacity) { return NULL; }
+    if(cnt == NULL || cnt->size + 1 == cnt->capacity)
+    {
 
+        printf("push(): stack_container must be non-null and have capacity for this value [%i]", value);   
+        return NULL; 
+
+    }
+
+    printf("push(): value [%i] pushed to top of stack.\n", value);
     struct lnode* data = cnt->data;
     cnt->data = lead_insert(data, value);
     cnt->size++;
@@ -40,7 +46,15 @@ struct lnode* push(struct stack_container* cnt, const int value)
 struct lnode* peek(struct stack_container* cnt)
 {
 
-    if(cnt == NULL || cnt->data == NULL || cnt->size == 0 || cnt->capacity == 0) { return NULL; }
+    if(cnt == NULL || cnt->data == NULL || cnt->size == 0 || cnt->capacity == 0)
+    {
+
+        printf("peek(): stack_container must be non-null and have a size and capacity > 0.\n");
+        return NULL; 
+
+    }
+
+    printf("peek(): returning lnode with value [%i].\n", cnt->data->value);
     return cnt->data;
 
 }
@@ -50,13 +64,26 @@ struct lnode* pop(struct stack_container* cnt)
 {
 
     // No items to pop or cnt is null, just return.
-    if(cnt == NULL || cnt->size == 0) { return; }
+    if(cnt == NULL || cnt->size == 0) 
+    {
+
+        printf("pop(): stack_container must be non-null and have size > 1 to pop.\n");   
+        return; 
+
+    }
 
     struct lnode* data = cnt->data;
 
     // No data to pop, something is wrong as size property is wrong.
-    if(data == NULL) { return; }
+    if(data == NULL) 
+    {
 
+        printf("pop(): no data to pop.\n");
+        return; 
+
+    }
+
+    printf("pop(): popped lnode with value [%i] from stack.\n", cnt->data->value);
     struct lnode* temp = data;
     data = data->next;
     free(temp);
