@@ -26,8 +26,15 @@ struct lnode* push(struct queue_container* cnt, const int value)
 {
 
     // We don't have enough capacity for this. So just return the function.
-    if(cnt == NULL || cnt->size + 1 == cnt->capacity) { return NULL; }
+    if(cnt == NULL || cnt->size + 1 == cnt->capacity)
+    {
 
+        printf("push(): queue_container must be non-null and have a size + 1 != capacity.\n");
+        return NULL; 
+
+    }
+
+    printf("push(): pushing value [%i] to rear of queue.\n", value);
     struct lnode* data = cnt->data;
     const int is_empty = data == NULL ? 1 : 0;
     cnt->data = trail_insert(data, cnt->end, value);
@@ -42,7 +49,15 @@ struct lnode* push(struct queue_container* cnt, const int value)
 struct lnode* peek(struct queue_container* cnt)
 {
 
-    if(cnt == NULL || cnt->data == NULL || cnt->size == 0 || cnt->capacity == 0) { return NULL; }
+    if(cnt == NULL || cnt->data == NULL || cnt->size == 0 || cnt->capacity == 0)
+    {
+
+        printf("peek(): queue_container must be non-null and have data non-null, size, capacity > 0.\n");   
+        return NULL; 
+
+    }
+
+    printf("peek(): returning node with value [%i]", cnt->data->value);
     return cnt->data;
 
 }
@@ -52,12 +67,24 @@ struct lnode* pop(struct queue_container* cnt)
 {
 
     // No items to pop or cnt is null, just return.
-    if(cnt == NULL || cnt->size == 0) { return NULL; }
+    if(cnt == NULL || cnt->size == 0)
+    {
+
+        printf("pop(): cannot pop from null queue_container, size must be > 0.\n");   
+        return NULL; 
+
+    }
 
     struct lnode* data = cnt->data;
 
     // No data to pop, something is wrong as size property is wrong.
-    if(data == NULL) { return NULL; }
+    if(data == NULL) 
+    {
+
+        printf("pop(): no data allocated within queue_container.\n");   
+        return NULL; 
+
+    }
 
     struct lnode* temp = data;
     data = data->next;
@@ -72,6 +99,7 @@ struct lnode* pop(struct queue_container* cnt)
     free(temp);
     cnt->size--;
     cnt->data = data;
+    printf("pop(): popped value [%i] from queue_container.\n", cnt->data->value);
     return cnt->data;
     
 }
