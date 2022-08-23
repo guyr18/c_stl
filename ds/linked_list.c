@@ -20,7 +20,12 @@ struct lnode
 void log_contents(struct lnode* root)
 {
 
-    if(root == NULL) { return; }
+    if(root == NULL) { 
+        
+        printf("log_contents(): No contents to print, returning function.\n");
+        return; 
+
+    }
 
     while(root != NULL)
     {
@@ -48,7 +53,12 @@ struct lnode* erase_node_of(struct lnode* root, const int value)
 {
 
     // Empty list.
-    if(root == NULL) { return NULL; }
+    if(root == NULL) { 
+
+        printf("erase_node_of(): Can\'t delete from an empty list, returning function.\n");   
+        return NULL; 
+
+    }
 
     struct lnode* prev = NULL;
     struct lnode* cur = root;
@@ -62,21 +72,30 @@ struct lnode* erase_node_of(struct lnode* root, const int value)
             if(prev == NULL)
             {
 
+                printf("erase_node_of(): Deleting linked list node with value [%i].\n", value);
                 free(cur);
                 cur = NULL;
+                printf("erase_node_of(): Node with value [%i] deleted.\n", value);
                 return NULL;
 
             }
 
+            printf("erase_node_of(): Deleting linked list node with value [%i].\n", value);
             struct lnode* next = cur->next;
             prev->next = next;
             free(cur);
+            printf("erase_node_of(): Node with value [%i] deleted.\n", value);
             return root;
 
         }
+
+        prev = cur;
+        cur = cur->next;
+
     }
 
     // Value is not present in the list.
+    printf("erase_node_of(): Value [%i] not found in linked list.\n", value);
     return NULL;
 
 }
@@ -277,7 +296,12 @@ int contains_value(const int value, struct lnode* root)
 struct lnode* build_from_array(int src[], const size_t n)
 {
 
-    if(n == 0 || src == NULL) { return NULL; }
+    if(n == 0 || src == NULL) { 
+
+        printf("build_from_array(): can\'t build a linked list from an empty array, returning function.\n");   
+        return NULL; 
+
+    }
     
     struct lnode* main_head = NULL;
     size_t index = 1;
@@ -285,6 +309,7 @@ struct lnode* build_from_array(int src[], const size_t n)
     root->value = src[0];
     main_head = root;
 
+    printf("build_from_array(): building linked list from array.\n");
     while(index < n)
     {
 
@@ -295,6 +320,7 @@ struct lnode* build_from_array(int src[], const size_t n)
 
     }
 
+    printf("build_from_array(): linked list built.\n");
     return main_head;
 
 }
