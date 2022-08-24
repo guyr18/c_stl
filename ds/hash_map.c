@@ -113,20 +113,37 @@ int remove_key(const char* key, struct hash_map_settings* settings)
     struct bucket_node* prev = NULL;
 
     // Loop until the current item in our bucket (bucket_head) is null or we find the key that we are looking for.
-    while(bucket_head != NULL)
+    while(settings->cache[bucket_index] != NULL)
     {
 
-        if(bucket_head->key == key) { break; }
+        if(settings->cache[bucket_index]->key == key)
+        {
 
-        prev = bucket_head;
-        bucket_head = bucket_head->next;
+            if(prev == NULL)
+            {
+
+                settings->cache[bucket_index] = NULL;
+
+            }
+            else
+            {
+
+                prev->next = settings->cache[bucket_index] == NULL ? NULL : settings->cache[bucket_index]->next;
+                settings->cache[bucket_index] = NULL;
+
+            }
+
+            printf("remove_key(): key [%s] successfully removed.\n", key);
+            break;
+
+        }
+
+        prev = settings->cache[bucket_index];
+        settings->cache[bucket_index] = settings->cache[bucket_index]->next;
 
     }
 
-    printf("remove_key(): key [%s] successfully removed.\n", key);
-    prev->next = bucket_head->next == NULL ? NULL : bucket_head->next;
-    free(bucket_head);
-    bucket_head = NULL;
+    settings->cache[bucket_index] = bucket_head;
     return 1;
     
 }
