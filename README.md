@@ -17,12 +17,12 @@ show and describe how you may use these data structures are provided in the **te
 The provided tests have been tested on a **Ubuntu 22.04 LTS** operating system and compiled using **gcc**. Simply put, you may
 compile and run these tests using the following syntax:
 
-    ```
-    gcc <test_c_file>
-    ```
+```
+gcc <test_c_file>
+```
 
 This will compile the file into an executable called **a.out**. Lastly, you may run this executable as follows:
 
-    ```
-    ./a.out
-    ```
+```
+./a.out
+```
