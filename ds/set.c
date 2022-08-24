@@ -39,6 +39,7 @@ int add(struct set_data* data, const int value)
 int discard(struct set_data* data, const int value)
 {
 
+    return remove_key(value, &data->settings);
 
 }
 
