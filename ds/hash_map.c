@@ -5,6 +5,11 @@
 #define DEF_HM_CAP 20
 #endif
 
+// Hash_map.c represents a hashtable or hashmap data structure using a chaining implementation. It provides
+// constant time operations for key lookup, key insertion, and key deletion. It utilizes a very basic hashing
+// function to avoid collisions => x % y where x is the ascii sum of a particular key k and y is the maximum
+// capacity of this hashmap. For information on setting the capacity you may refer to tests/test_hash_map.c.
+
 // Bucket_node is a struct representing a key-value pair per a hashmap instance.
 // It is a singly linked list with the addition of a key and value variable.
 struct bucket_node 
@@ -123,6 +128,7 @@ int remove_key(const char* key, struct hash_map_settings* settings)
             {
 
                 settings->cache[bucket_index] = NULL;
+                settings->cur_buckets_filled--;
 
             }
             else
@@ -144,6 +150,7 @@ int remove_key(const char* key, struct hash_map_settings* settings)
     }
 
     settings->cache[bucket_index] = bucket_head;
+    settings->total_nodes--;
     return 1;
     
 }

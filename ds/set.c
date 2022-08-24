@@ -1,5 +1,10 @@
 #ifndef SET_C
+#if !defined(BUF_SIZE)
+#define BUF_SIZE 256
+#endif
+
 #include "hash_map.c"
+#include <string.h>
 
 // A set represents a collection of objects with no repetition. This is implemented by using the hash_map.c
 // implementation. This allows for constant amortized run-time on all functions. i.e.: inserting a value,
@@ -22,16 +27,10 @@ int add(struct set_data* data, const int value)
 {
 
     printf("add(): set add invoked on value [%i].\n", value);
-    
-    if(put(value, value, &data->settings) == NULL)
-    {
-
-        return 0;
-
-    }
-
-    return 1;
-
+    char buf[BUF_SIZE];
+    sprintf(buf, "%d", value);
+    return put(buf, value, &data->settings) != NULL ? 1 : 0;
+   
 }
 
 // Discard(data, value) removes value, value, if it exists. If this operation successfully performs a removal, 1
@@ -39,7 +38,9 @@ int add(struct set_data* data, const int value)
 int discard(struct set_data* data, const int value)
 {
 
-    return remove_key(value, &data->settings);
+    char buf[BUF_SIZE];
+    sprintf(buf, "%d", value);
+    return remove_key(buf, &data->settings);
 
 }
 
@@ -48,15 +49,17 @@ int contains(struct set_data* data, const int value)
 {
 
     printf("contains(): set contains invoked on value [%i].\n", value);
+    char buf[BUF_SIZE];
+    sprintf(buf, "%d", value);
+    return get(buf, &data->settings) != NULL ? 1 : 0;
 
-    if(get(value, &data->settings) == NULL)
-    {
+}
 
-        return 0;
+// Size(settings) returns the length of the set object represented by parameter data.
+size_t size(const struct set_data* data) 
+{
 
-    }
-
-    return 1;
+    return data->settings.total_nodes;
 
 }
 
