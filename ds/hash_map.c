@@ -84,6 +84,53 @@ struct bucket_node* get(const char* key, const struct hash_map_settings* setting
 
 }
 
+// remove_key(key, settings) attempts to remove key, key. If it does not exist, 0 is returned. Otherwise, 1 is returned indicating the
+// success of the operation.
+int remove_key(const char* key, struct hash_map_settings* settings)
+{
+
+    // If there are no current nodes or settings is null, there is nothing for this function to delete. Just return null.
+    if(settings == NULL || settings->capacity == 0 || settings->cur_buckets_filled == 0 || settings->total_nodes == 0)
+    {
+
+        printf("remove_key(): settings must be non-null and configured to use remove_key(). Please put keys into hash map first.\n");
+        return 0;
+
+    }
+
+    int bucket_index = get_hash(key, settings);
+    struct bucket_node* bucket_head = settings->cache[bucket_index];
+    
+    // Key does not exist.
+    if(bucket_head == NULL)
+    {
+
+        printf("remove_key(): key [%s] does not exist.\n", key);
+        return 0;
+
+    }
+
+    struct bucket_node* prev = NULL;
+
+    // Loop until the current item in our bucket (bucket_head) is null or we find the key that we are looking for.
+    while(bucket_head != NULL)
+    {
+
+        if(bucket_head->key == key) { break; }
+
+        prev = bucket_head;
+        bucket_head = bucket_head->next;
+
+    }
+
+    printf("remove_key(): key [%s] successfully removed.\n", key);
+    prev->next = bucket_head->next == NULL ? NULL : bucket_head->next;
+    free(bucket_head);
+    bucket_head = NULL;
+    return 1;
+    
+}
+
 // Put(key, value, settings) inserts key, key, and value, value, as a key-value pair. It updates several properties in 
 // settings as needed. If it is unsuccessful, a null pointer is returned. Otherwise, the head of the bucket that it is 
 // inserted in is returned; struct bucket_node*.
