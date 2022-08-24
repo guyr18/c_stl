@@ -42,6 +42,12 @@ int main(void)
 
     }
 
+    // Test remove_key functionality.
+    remove_key("tiger", &settings);
+    struct bucket_node* node3 = get("tiger", &settings);
+    int success3 = node3 != NULL ? 1 : 0;
+    printf("Does hashmap contain key [%s] following removal? %i\n", "tiger", success3);
+
     struct bucket_node** cache = settings.cache;
     int index2 = 0;
 
